@@ -1,0 +1,26 @@
+version: '3.8'
+services:
+  db:
+    image: mongo
+    container_name: mongodb
+    volumes:
+      - mongodb_vol:/data/db
+    ports:
+      - "27017:27017"
+
+  web:
+    build: .
+    container_name: nextjs
+    image: nextjs:v1
+    depends_on:
+      - db
+    volumes:
+      - D:\Nextjs\nextjs1:/app
+      - /app/node_modules
+    environment:
+      MONGODB_URI: "mongodb://mongodb:27017/mydatabase"
+    ports:
+      - "3000:3000"
+
+volumes:
+  mongodb_vol:
